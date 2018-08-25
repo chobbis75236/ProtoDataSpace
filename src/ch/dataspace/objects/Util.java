@@ -7,7 +7,7 @@ final class Util {
         return (Math.random()*(max-min)+min);
     }
 
-    static double randInt(int min, int max) {
+    static int randInt(int min, int max) {
         Random random = new Random();
         return random.nextInt(max-min + 1) + min;
     }

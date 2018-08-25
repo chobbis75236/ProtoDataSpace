@@ -1,32 +1,51 @@
 package ch.dataspace.objects;
 
+import java.util.ArrayList;
+
 public class Region {
     private static final double STELLAR_DENSITY = 0.14; // per cubic parsec
+    private static int count = 0;
 
-    private int regionID;
+    private ArrayList<System> systems = new ArrayList<>();
+
+    private int id;
     private double width; // parsecs
-    private int starCount;
+    private int systemCount;
 
-    public Region(int regionID, double width) {
-        this.regionID = regionID;
+    public Region(double width) {
+        id = count;
+        count++;
         this.width = width;
-        starCount = (int) (STELLAR_DENSITY * Math.pow(width,3) * Util.randBetween(0.8, 1.2));
+        // density * volume * randomness factor, then converting star count to system count.
+        systemCount = (int) (STELLAR_DENSITY * Math.pow(width,3) * Util.randDouble(0.8, 1.2) * 0.6);
+        genSystems();
     }
 
-    public int getRegionID() {
-        return regionID;
+    private void genSystems() {
+        for (int i = 0; i < systemCount; i++) {
+            systems.add(new System(this));
+        }
     }
 
-    public double getWidth() {
+    double getWidth() {
         return width;
-    }
-
-    public int getStarCount() {
-        return starCount;
     }
 
     @Override
     public String toString() {
-        return "REGION ID: " + regionID + "; STAR COUNT: " + starCount;
+        // StringBuilder is used as it is more efficient for repeated appending.
+        StringBuilder sb = new StringBuilder();
+        sb.append("- REGION #");
+        sb.append(id);
+        sb.append(" (width: ");
+        sb.append(width);
+        sb.append(" systemCount: ");
+        sb.append(systemCount);
+        sb.append(")");
+        for (System system : systems) {
+            sb.append("\n");
+            sb.append(system.toString());
+        }
+        return sb.toString();
     }
 }

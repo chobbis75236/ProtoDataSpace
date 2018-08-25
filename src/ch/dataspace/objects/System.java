@@ -28,7 +28,7 @@ public class System {
 
     private void genStarCount(int max) {
         // Chance to have multiple stars in a system, with each star getting more unlikely.
-        if (Util.randDouble(0, 1) < 0.6 && starCount < max) {
+        if (Util.randDouble(0, 1) < 0.4 && starCount < max) {
             starCount++;
             genStarCount(max);
         }
@@ -43,6 +43,11 @@ public class System {
 
     @Override
     public String toString() {
-        return " - SYSTEM #" + id + " (" + xPos + ", " + yPos + ", " + zPos + ") (starCount: " + starCount + ")";
+        String out = " - SYSTEM #" + id + " (" + xPos + ", " + yPos + ", " + zPos + ") (starCount: " + starCount + ")";
+        for (Star star : stars) {
+            out += "\n";
+            out += star.toString();
+        }
+        return out;
     }
 }

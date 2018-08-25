@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Region> regions = new ArrayList<>();
 
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < 80; i++) {
             regions.add(new Region(5));
         }
 

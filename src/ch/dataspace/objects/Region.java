@@ -17,7 +17,7 @@ public class Region {
         count++;
         this.width = width;
         // density * volume * randomness factor, then converting star count to system count.
-        systemCount = (int) (STELLAR_DENSITY * Math.pow(width,3) * Util.randDouble(0.8, 1.2) * 0.6);
+        systemCount = (int) (STELLAR_DENSITY * Math.pow(width,3) * Util.randDouble(0.8, 1.2) / 1.5216);
         genSystems();
     }
 
@@ -34,18 +34,11 @@ public class Region {
     @Override
     public String toString() {
         // StringBuilder is used as it is more efficient for repeated appending.
-        StringBuilder sb = new StringBuilder();
-        sb.append("- REGION #");
-        sb.append(id);
-        sb.append(" (width: ");
-        sb.append(width);
-        sb.append(" systemCount: ");
-        sb.append(systemCount);
-        sb.append(")");
+        String out = "- REGION #" + id + " (width: " + width + " systemCount: " + systemCount + ")";
         for (System system : systems) {
-            sb.append("\n");
-            sb.append(system.toString());
+            out += "\n";
+            out += system.toString();
         }
-        return sb.toString();
+        return out;
     }
 }

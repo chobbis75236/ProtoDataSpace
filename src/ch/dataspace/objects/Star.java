@@ -16,13 +16,20 @@ class Star {
     private LumClass lumClass;
     private int subclass;
 
+    private double mass;
+    private double temp;
+    private double lum;
+    private double radius;
+
     // Used for a completely random star.
     Star(Object parent) {
         this.id = count;
         count++;
         this.parent = parent;
 
-        genType();
+        genBasicType();
+        genClass();
+        genBasicStats();
     }
 
     // Used for a binary star.
@@ -44,14 +51,13 @@ class Star {
             if (basicType == StarType.GIANT || basicType.getRank() < primary.getBasicType().getRank()) {
                 basicType = StarType.BROWN_DWARF;
             }
-            genSpecType();
-            genSubclass();
-            genLumClass();
+            genClass();
         }
     }
 
-    private void genType() {
-        genBasicType();
+    // CLASS AND TYPE
+
+    private void genClass() {
         genSpecType();
         genSubclass();
         genLumClass();
@@ -136,6 +142,41 @@ class Star {
         }
     }
 
+    // BASIC STATS
+
+    private void genBasicStats() {
+        genMass();
+        genTemp();
+        calcLum();
+        calcRad();
+    }
+
+    private void genMass() {
+        double[][] massTable = {
+                {  80,   70,   60,   50,   45,   40,   35,   30,   25,   20},
+                {17.5, 15.1, 13.0, 11.1,  9.5,  8.2,    7,    6,    5,    4},
+                {   3,  2.8,  2.6,  2.5,  2.3,  2.2,    2,  1.9,  1.8,  1.7},
+                { 1.6, 1.53, 1.47, 1.42, 1.36, 1.31, 1.26, 1.21, 1.17, 1.12},
+                {1.08, 1.05, 1.02, 0.99, 0.96, 0.94, 0.92, 0.89, 0.87, 0.85},
+                {0.82, 0.79, 0.75, 0.72, 0.69, 0.66, 0.63, 0.61, 0.56, 0.49},
+                {0.46, 0.38, 0.32, 0.26, 0.21, 0.18, 0.15, 0.12, 0.10, 0.08}};
+        if (specType != null) {
+            mass = massTable[specType.getRank()][subclass];
+        }
+    }
+
+    private void genTemp() {
+
+    }
+
+    private void calcLum() {
+
+    }
+
+    private void calcRad() {
+
+    }
+
     @Override
     public String toString() {
         String out = "  - STAR #" + id + " (" + basicType.name() + ")";
@@ -149,6 +190,7 @@ class Star {
             }
             out += "]";
         }
+        out += "(mass: " + mass + ")";
         return out;
     }
 

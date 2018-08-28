@@ -208,20 +208,26 @@ class Star {
             }
 
             // Non-main-sequence stars vary significantly in size, luminosity, and radius, so 'randomise':
-            /*
-            switch (lumClass) {
+            double tempRand = Util.randDouble(0,1);
+            switch (lumClass) { // Switch statement used to increase readability.
                 case Ia:
-                    break;
                 case Ib:
-                    break;
                 case II:
-                    break;
                 case III:
+                    if (tempRand < 0.8) {
+                        mass *= tempRand + 0.2;
+                    } else {
+                        mass *= tempRand * 2.5 - 1;
+                    }
                     break;
                 case IV:
+                    if (tempRand < 0.5) {
+                        mass *= tempRand + 0.5;
+                    } else if (tempRand > 0.6) {
+                        mass *= tempRand + 0.4;
+                    }
                     break;
             }
-            */
 
             // Mass-luminosity relationship:
             if (mass < 0.43) {

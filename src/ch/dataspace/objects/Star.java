@@ -215,16 +215,16 @@ class Star {
                 case II:
                 case III:
                     if (tempRand < 0.8) {
-                        mass *= tempRand + 0.2;
+                        mass *= tempRand + 0.25;
                     } else {
-                        mass *= tempRand * 2.5 - 1;
+                        mass *= tempRand * 2.5 - 0.875;
                     }
                     break;
                 case IV:
                     if (tempRand < 0.5) {
-                        mass *= tempRand + 0.5;
+                        mass *= tempRand + 0.55;
                     } else if (tempRand > 0.6) {
-                        mass *= tempRand + 0.4;
+                        mass *= tempRand + 0.45;
                     }
                     break;
             }
@@ -240,11 +240,67 @@ class Star {
                 lum = 32000 * mass;
             }
 
-            radius = Math.sqrt(lum) * Math.pow(5800/temp, 2);
+            radius = Math.sqrt(lum) * Math.pow(5778/temp, 2);
 
         } else if (basicType == StarType.WHITE_DWARF) {
 
+            double tempRand = Util.randDouble(0, 1);
+            // MASS
+            if (tempRand < (13.0/30)) {
+                mass = -2 * tempRand + 1.4;
+            } else {
+                mass = -0.5 * tempRand + 0.825;
+            }
+            // RADIUS
+            if (tempRand < 0.15) {
+                radius = 0.03 * tempRand + 0.0025;
+            } else if (tempRand < 0.25) {
+                radius = 0.02 * tempRand + 0.004;
+            } else {
+                radius = 0.01 * tempRand + 0.0065;
+            }
+
+            tempRand = Util.randDouble(0,1);
+            // TEMPERATURE
+            if (tempRand < 0.65) {
+                temp = 20000 * tempRand + 3000;
+            } else if (tempRand < 0.75) {
+                temp = 40000 * tempRand - 10000;
+            } else {
+                temp = 50000 * tempRand - 17500;
+            }
+
+            // LUMINOSITY
+            lum = Math.pow(radius, 2) * Math.pow(temp, 4) / Math.pow(5778, 4);
+
         } else if (basicType == StarType.BROWN_DWARF) {
+
+            double tempRand = Util.randDouble(0, 1);
+            // MASS
+            if (tempRand < 0.65) {
+                mass = -0.06 * tempRand + 0.073;
+            } else if (tempRand < 0.75) {
+                mass = -0.08 * tempRand + 0.086;
+            } else {
+                mass = -0.06 * tempRand + 0.071;
+            }
+            // RADIUS
+            if (tempRand < 0.5) {
+                radius = 0.1 * tempRand + 0.065;
+            } else {
+                radius = 0.01 * tempRand + 0.11;
+            }
+
+            tempRand = Util.randDouble(0,1);
+            // TEMPERATURE
+            if (tempRand < 0.35) {
+                temp = 1000 * tempRand + 650;
+            } else {
+                temp = 2000 * tempRand + 300;
+            }
+
+            // LUMINOSITY
+            lum = Math.pow(radius, 2) * Math.pow(temp, 4) / Math.pow(5778, 4);
 
         }
     }
@@ -262,10 +318,10 @@ class Star {
             }
             out += "]";
         }
-        out += "\n(L: " + Util.round(lum,3) + " sol)";
-        out += "\n(M: " + Util.round(mass,3) + " sol)";
-        out += "\n(T: " + Util.round(temp,3) + " K)";
-        out += "\n(R: " + Util.round(radius,3) + " sol)";
+        out += "\n(L: " + Util.sf(lum,5) + " sol)";
+        out += "\n(M: " + Util.sf(mass,5) + " sol)";
+        out += "\n(T: " + Util.sf(temp,5) + " K)";
+        out += "\n(R: " + Util.sf(radius,5) + " sol)";
         return out;
     }
 

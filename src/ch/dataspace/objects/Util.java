@@ -1,6 +1,7 @@
 package ch.dataspace.objects;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Random;
 
@@ -19,6 +20,14 @@ final class Util {
 
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    static double sf(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.round(new MathContext(places));
         return bd.doubleValue();
     }
 }

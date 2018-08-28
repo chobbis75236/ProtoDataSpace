@@ -1,5 +1,7 @@
 package ch.dataspace.objects;
 
+import ch.dataspace.framework.StarType;
+
 import java.util.ArrayList;
 
 public class System {
@@ -12,6 +14,7 @@ public class System {
     private int id;
     private double xPos, yPos, zPos;
     private int starCount;
+    private double systemAge;
 
     System(Region region) {
         this.id = count;
@@ -24,6 +27,17 @@ public class System {
         starCount = 1;
         genStarCount(4);
         genStars();
+        if (stars.get(0).getBasicType() == StarType.BROWN_DWARF) {
+
+        } else {
+            switch (stars.get(0).getLumClass()) {
+                case Ia:
+                case Ib:
+                case II:
+                case III:
+
+            }
+        }
     }
 
     private void genStarCount(int max) {
@@ -49,5 +63,9 @@ public class System {
             out += star.toString();
         }
         return out;
+    }
+
+    public void setSystemAge(double systemAge) {
+        this.systemAge = systemAge;
     }
 }

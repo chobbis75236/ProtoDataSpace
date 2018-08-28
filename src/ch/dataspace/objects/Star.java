@@ -65,6 +65,7 @@ class Star {
     }
 
     private void genBasicType() {
+        // Probabilities determined through Trisen.
         double tempRand = Util.randDouble(0, 1); // Determines basic type.
         if(tempRand < 0.01) basicType = StarType.GIANT;            // 0.01
         else if(tempRand < 0.02) basicType = StarType.CLASS_A;     // 0.01
@@ -73,8 +74,8 @@ class Star {
         else if(tempRand < 0.27) basicType = StarType.CLASS_K;     // 0.14
         else if(tempRand < 0.76) basicType = StarType.CLASS_M;     // 0.49
         else if(tempRand < 0.86) basicType = StarType.WHITE_DWARF; // 0.10
-        else if(tempRand < 0.99) basicType = StarType.BROWN_DWARF; // 0.13
-        else basicType = StarType.SPECIAL;                         // 0.01
+        else basicType = StarType.BROWN_DWARF;                     // 0.14
+        // Note: StarType.SPECIAL should be added in a future version.
     }
 
     // Requires basicType.
@@ -164,6 +165,11 @@ class Star {
                     } else {
                         temp = 0.00089849 * Math.pow(x, 4) - 0.17438 * Math.pow(x, 3) + 13.234 * Math.pow(x, 2) - 598.52 * x + 17004;
                     }
+                    if (x < 20) {
+                        lum = 70.949 * Math.pow(x, 4) - 4069.7 * Math.pow(x, 3) + 88200 * Math.pow(x, 2) - 901710 * x + 4071100;
+                    } else {
+                        lum = 0.107 * Math.pow(x, 4) - 22.823 * Math.pow(x, 3) + 1792 * Math.pow(x, 2) - 58769 * x + 739724;
+                    }
                     break;
                 case Ib:
                     mass = 0.000018055 * Math.pow(x, 4) - 0.0032087 * Math.pow(x, 3) + 0.21771 * Math.pow(x, 2) - 6.4877 * x + 81.512;
@@ -171,6 +177,11 @@ class Star {
                         temp = -0.14306 * Math.pow(x, 4) + 9.3751 * Math.pow(x, 3) - 147.57 * Math.pow(x, 2) - 1417.2 * x + 44675;
                     } else {
                         temp = 0.0011439 * Math.pow(x, 4) - 0.21971 * Math.pow(x, 3) + 16.094 * Math.pow(x, 2) - 668.22 * x + 17662;
+                    }
+                    if (x < 15) {
+                        lum = 89.918 * Math.pow(x, 4) - 4328.4 * Math.pow(x, 3) + 85878 * Math.pow(x, 2) - 856320 * x + 3640600;
+                    } else {
+                        lum = 0.081176 * Math.pow(x, 4) - 12.096 * Math.pow(x, 3) + 710.33 * Math.pow(x, 2) - 19274 * x + 205980;
                     }
                     break;
                 case II:
@@ -180,6 +191,15 @@ class Star {
                     } else {
                         temp = 0.0029573 * Math.pow(x, 4) - 0.55328 * Math.pow(x, 3) + 37.9 * Math.pow(x, 2) - 1262.2 * x + 23474;
                     }
+                    if (x < 15) {
+                        lum = 100.11 * Math.pow(x, 4) - 4836.4 * Math.pow(x, 3) + 93237 * Math.pow(x, 2) - 876530 * x + 3453000;
+                    } else if (x < 20) {
+                        lum = 14.583 * Math.pow(x, 4) - 1068.1 * Math.pow(x, 3) + 29565 * Math.pow(x, 2) - 369110 * x + 1769600;
+                    } else if (x < 60) {
+                        lum = 0.013752 * Math.pow(x, 4) - 2.0811 * Math.pow(x, 3) + 119.55 * Math.pow(x, 2) - 3078.6 * x + 30396;
+                    } else {
+                        lum = 14.88 * Math.pow(x, 3) - 3082.2 * Math.pow(x, 2) + 212890 * x - 4887300;
+                    }
                     break;
                 case III:
                     mass = 0.000024241 * Math.pow(x, 4) - 0.0040822 * Math.pow(x, 3) + 0.25394 * Math.pow(x, 2) - 7.0001 * x + 77.633;
@@ -187,6 +207,13 @@ class Star {
                         temp = 0.065764 * Math.pow(x, 4) + 1.9956 * Math.pow(x, 3) - 77.714 * Math.pow(x, 2) - 1610.3 * x + 46751;
                     } else {
                         temp = 0.0013351 * Math.pow(x, 4) - 0.29368 * Math.pow(x, 3) + 23.548 * Math.pow(x, 2) - 938.69 * x + 21036;
+                    }
+                    if (x < 5) {
+                        lum = 14583 * Math.pow(x, 4) - 179170 * Math.pow(x, 3) + 797920 * Math.pow(x, 2) - 1811900 * x + 2996400;
+                    } else if (x < 20) {
+                        lum = 33.853 * Math.pow(x, 4) - 2167.2 * Math.pow(x, 3) + 52420 * Math.pow(x, 2) - 571540 * x + 2386900;
+                    } else if (x < 60) {
+                        lum = 0.0014347 * Math.pow(x, 4) - 0.2252 * Math.pow(x, 3) + 13.484 * Math.pow(x, 2) - 362.05 * x + 3701.4;
                     }
                     break;
                 case IV:
@@ -196,6 +223,15 @@ class Star {
                     } else {
                         temp = 0.0064059 * Math.pow(x, 4) - 0.98206 * Math.pow(x, 3) + 57.372 * Math.pow(x, 2) - 1655.6 * x + 26772;
                     }
+                    if (x < 5) {
+                        lum = -3333.3 * Math.pow(x, 4) + 9259.2 * Math.pow(x, 3) + 188890 * Math.pow(x, 2) - 1191000 * x + 2499400;
+                    } else if (x < 20) {
+                        lum = 17.658 * Math.pow(x, 4) - 1152 * Math.pow(x, 3) + 28441 * Math.pow(x, 2) - 316410 * x + 1344000;
+                    } else if (x < 40) {
+                        lum = 0.0015793 * Math.pow(x, 4) - 0.23154 * Math.pow(x, 3) + 12.761 * Math.pow(x, 2) - 314.35 * x + 2937.7;
+                    } else {
+                        lum = -0.2 * x + 14;
+                    }
                     break;
                 case V:
                     mass = 0.000000010044 * Math.pow(x, 6) - 0.0000027701 * Math.pow(x, 5) + 0.00031297 * Math.pow(x, 4) - 0.018575 * Math.pow(x, 3) + 0.61243 * Math.pow(x, 2) - 10.704 * x + 79.497;
@@ -203,6 +239,16 @@ class Star {
                         temp = 0.13864 * Math.pow(x, 4) + 0.76578 * Math.pow(x, 3) - 90.776 * Math.pow(x, 2) - 1554.2 * x + 49712;
                     } else {
                         temp = 0.0015024 * Math.pow(x, 4) - 0.3436 * Math.pow(x, 3) + 28.082 * Math.pow(x, 2) - 1105.5 * x + 23524;
+                    }
+                    // Mass-luminosity relationship:
+                    if (mass < 0.43) {
+                        lum = 0.23 * Math.pow(mass, 2.3);
+                    } else if (mass < 2) {
+                        lum = Math.pow(mass, 4);
+                    } else if (mass < 55) {
+                        lum = 1.4 * Math.pow(mass, 3.5);
+                    } else {
+                        lum = 32000 * mass;
                     }
                     break;
             }
@@ -216,8 +262,10 @@ class Star {
                 case III:
                     if (tempRand < 0.8) {
                         mass *= tempRand + 0.25;
+                        lum *= tempRand + 0.25;
                     } else {
                         mass *= tempRand * 2.5 - 0.875;
+                        lum *= tempRand * 5 - 2.75;
                     }
                     break;
                 case IV:
@@ -226,18 +274,8 @@ class Star {
                     } else if (tempRand > 0.6) {
                         mass *= tempRand + 0.45;
                     }
+                    lum *= tempRand * 2 - 0.1;
                     break;
-            }
-
-            // Mass-luminosity relationship:
-            if (mass < 0.43) {
-                lum = 0.23 * Math.pow(mass, 2.3);
-            } else if (mass < 2) {
-                lum = Math.pow(mass, 4);
-            } else if (mass < 55) {
-                lum = 1.4 * Math.pow(mass, 3.5);
-            } else {
-                lum = 32000 * mass;
             }
 
             radius = Math.sqrt(lum) * Math.pow(5778/temp, 2);

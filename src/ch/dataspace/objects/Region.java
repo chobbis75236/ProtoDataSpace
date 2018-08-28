@@ -35,7 +35,7 @@ public class Region {
     @Override
     public String toString() {
         // StringBuilder is used as it is more efficient for repeated appending.
-        String out = "- REGION #" + id + " (width: " + width + " systemCount: " + systemCount + ")";
+        String out = "- REGION #" + id + " (width: " + width + " pc; systemCount: " + systemCount + ")";
         for (System system : systems) {
             out += "\n";
             out += system.toString();

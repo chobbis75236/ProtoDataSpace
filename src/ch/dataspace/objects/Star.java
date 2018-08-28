@@ -262,10 +262,10 @@ class Star {
             }
             out += "]";
         }
-        out += "\n(L: " + Util.round(lum,3) + ")";
-        out += "\n(M: " + Util.round(mass,3) + ")";
-        out += "\n(T: " + Util.round(temp,3) + ")";
-        out += "\n(R: " + Util.round(radius,3) + ")";
+        out += "\n(L: " + Util.round(lum,3) + " sol)";
+        out += "\n(M: " + Util.round(mass,3) + " sol)";
+        out += "\n(T: " + Util.round(temp,3) + " K)";
+        out += "\n(R: " + Util.round(radius,3) + " sol)";
         return out;
     }
 

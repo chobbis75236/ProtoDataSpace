@@ -43,7 +43,7 @@ public class System {
 
     @Override
     public String toString() {
-        String out = " - SYSTEM #" + id + " (" + Util.round(xPos,2) + ", " + Util.round(yPos,2) + ", " + Util.round(zPos,2) + ") (starCount: " + starCount + ")";
+        String out = " - SYSTEM #" + id + " (" + Util.round(xPos,2) + " pc, " + Util.round(yPos,2) + " pc, " + Util.round(zPos,2) + " pc) (starCount: " + starCount + ")";
         for (Star star : stars) {
             out += "\n";
             out += star.toString();

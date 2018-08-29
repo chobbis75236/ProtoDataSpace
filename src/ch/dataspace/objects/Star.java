@@ -16,10 +16,12 @@ class Star {
     private LumClass lumClass;
     private double subclass;
 
-    private double mass;
-    private double temp;
-    private double lum;
-    private double radius;
+    private double mass; // sol
+    private double temp; // K
+    private double lum; // sol
+    private double radius; // sol
+
+    private double age; // Gy
 
     // Used for a completely random star.
     Star(Object parent) {
@@ -29,7 +31,7 @@ class Star {
 
         genBasicType();
         genClass();
-        genAll();
+        genBasicStats();
     }
 
     // Used for a binary star.
@@ -53,7 +55,7 @@ class Star {
             }
             genClass();
         }
-        genAll();
+        genBasicStats();
     }
 
     // CLASS AND TYPE
@@ -142,10 +144,6 @@ class Star {
         } else if (specType != null) {
             subclass = Util.randDouble(0, 10);
         }
-    }
-
-    private void genAll() {
-        genBasicStats();
     }
 
     // BASIC STATS
@@ -269,12 +267,13 @@ class Star {
                     }
                     break;
                 case IV:
-                    if (tempRand < 0.5) {
+                    if (tempRand < 0.45) {
                         mass *= tempRand + 0.55;
-                    } else if (tempRand > 0.6) {
+                        lum *= 2 * tempRand + 0.1;
+                    } else if (tempRand > 0.55) {
                         mass *= tempRand + 0.45;
+                        lum *= 2 * tempRand - 0.1;
                     }
-                    lum *= tempRand * 2 - 0.1;
                     break;
             }
 
@@ -298,19 +297,6 @@ class Star {
                 radius = 0.01 * tempRand + 0.0065;
             }
 
-            tempRand = Util.randDouble(0,1);
-            // TEMPERATURE
-            if (tempRand < 0.65) {
-                temp = 20000 * tempRand + 3000;
-            } else if (tempRand < 0.75) {
-                temp = 40000 * tempRand - 10000;
-            } else {
-                temp = 50000 * tempRand - 17500;
-            }
-
-            // LUMINOSITY
-            lum = Math.pow(radius, 2) * Math.pow(temp, 4) / Math.pow(5778, 4);
-
         } else if (basicType == StarType.BROWN_DWARF) {
 
             double tempRand = Util.randDouble(0, 1);
@@ -328,8 +314,21 @@ class Star {
             } else {
                 radius = 0.01 * tempRand + 0.11;
             }
+        }
+    }
 
-            tempRand = Util.randDouble(0,1);
+    public void ageAdjust() {
+        if (basicType == StarType.BROWN_DWARF) {
+
+            double tempModifier;
+            if (age < 5) {
+                tempModifier = -0.05 * age;
+            } else {
+                tempModifier = -0.1 * age + 0.25;
+            }
+
+            // tempModifier is non-negative, so an upper bound is needed, which is randomised slightly.
+            double tempRand = Math.min(Util.randDouble(0, 1)+tempModifier, Util.randDouble(0.97, 1.03));
             // TEMPERATURE
             if (tempRand < 0.35) {
                 temp = 1000 * tempRand + 650;
@@ -339,6 +338,74 @@ class Star {
 
             // LUMINOSITY
             lum = Math.pow(radius, 2) * Math.pow(temp, 4) / Math.pow(5778, 4);
+        } else if (basicType == StarType.WHITE_DWARF) {
+
+            double tempModifier = -0.5 * age + 4.5;
+
+            // An upper and lower bound are needed, which is randomised slightly.
+            double tempRand = Util.bound(Util.randDouble(0, 1)+tempModifier, Util.randDouble(-0.03,0.03), Util.randDouble(0.97, 1.03));
+            // TEMPERATURE
+            if (tempRand < 0.65) {
+                temp = 20000 * tempRand + 3000;
+            } else if (tempRand < 0.75) {
+                temp = 40000 * tempRand - 10000;
+            } else {
+                temp = 50000 * tempRand - 17500;
+            }
+
+            // LUMINOSITY
+            lum = Math.pow(radius, 2) * Math.pow(temp, 4) / Math.pow(5778, 4);
+        } else {
+
+            switch (specType) {
+                case A:
+                    if (subclass < 5) {
+                        lum *= age + 0.7;
+                    } else {
+                        if (age < 0.4) {
+                            lum *= 0.25 * age + 0.725;
+                        } else {
+                            lum *= 0.5 * age + 0.625;
+                        }
+                    }
+                    break;
+                case F:
+                    if (subclass < 5) {
+                        lum *= 0.3 * age + 0.5;
+                    } else {
+                        lum *= 0.2 * age + 0.5;
+                    }
+                    break;
+                case G:
+                    if (subclass < 5) {
+                        lum *= 0.1 * age + 0.5;
+                    } else {
+                        if (age < 5) {
+                            lum *= 0.1 * age + 0.5;
+                        } else if (age > 7) {
+                            lum *= 0.1 * age + 0.3;
+                        }
+                    }
+                    break;
+                case K:
+                    if (subclass < 5) {
+                        if (age < 5) {
+                            lum *= 0.05 * age + 0.75;
+                        } else if (age > 9) {
+                            lum *= 0.05 * age + 0.55;
+                        }
+                    } else {
+                        if (age < 3) {
+                            lum *= 0.05 * age + 0.85;
+                        }
+                    }
+                    break;
+                case M:
+                    if (age < 2) {
+                        lum *= 0.1 * age + 0.8;
+                    }
+                    break;
+            }
 
         }
     }
@@ -360,6 +427,7 @@ class Star {
         out += "\n(M: " + Util.sf(mass,5) + " sol)";
         out += "\n(T: " + Util.sf(temp,5) + " K)";
         out += "\n(R: " + Util.sf(radius,5) + " sol)";
+        out += "\n(A: " + Util.sf(age, 5) + " Gy)";
         return out;
     }
 
@@ -377,5 +445,25 @@ class Star {
 
     public double getSubclass() {
         return subclass;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public double getTemp() {
+        return temp;
+    }
+
+    public double getLum() {
+        return lum;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setAge(double age) {
+        this.age = age;
     }
 }

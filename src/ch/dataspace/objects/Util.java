@@ -25,9 +25,17 @@ final class Util {
 
     static double sf(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
+        /*
+        if (Double.isInfinite(value)) return 88988;
+        if (Double.isNaN(value)) return 99899;
+        */
 
         BigDecimal bd = new BigDecimal(value);
         bd = bd.round(new MathContext(places));
         return bd.doubleValue();
+    }
+
+    static double bound(double value, double min, double max) {
+        return Math.min(max, Math.max(value, min));
     }
 }

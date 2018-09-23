@@ -10,7 +10,7 @@ public class Main {
 
         long startTime = System.nanoTime();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             regions.add(new Region(5));
         }
 
@@ -23,6 +23,6 @@ public class Main {
         long endTime = System.nanoTime();
 
         System.out.println("\nGENERATING: " + ((intermediateTime - startTime)/1000000) + " ms");
-        System.out.println("\nPRINTING: " + ((endTime - intermediateTime)/1000000) + " ms");
+        System.out.println("PRINTING: " + ((endTime - intermediateTime)/1000000) + " ms");
     }
 }
